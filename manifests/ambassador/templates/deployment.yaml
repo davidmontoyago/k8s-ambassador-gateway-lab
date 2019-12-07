@@ -52,7 +52,7 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
             - name: AMBASSADOR_NAMESPACE
-              value: "ambassador"
+              value: "default"
               
           livenessProbe:
             httpGet:

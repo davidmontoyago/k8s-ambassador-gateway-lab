@@ -11,7 +11,7 @@ templates:
 deploy:
 	make templates
 	kubectl apply -f ./manifests/ambassador/namespace.yaml
-	kubectl apply -n ambassador --recursive -f ./manifests/ambassador/templates
+	kubectl apply --recursive -f ./manifests/ambassador/templates
 
 delete:
-	kubectl delete namespace ambassador
+	kubectl delete --recursive -f ./manifests/ambassador/templates
