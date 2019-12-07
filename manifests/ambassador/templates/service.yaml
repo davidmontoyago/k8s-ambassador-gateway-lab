@@ -1,0 +1,25 @@
+---
+# Source: ambassador/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ambassador
+  labels:
+    app.kubernetes.io/name: ambassador
+    app.kubernetes.io/part-of: ambassador
+    helm.sh/chart: ambassador-5.1.0
+    app.kubernetes.io/instance: ambassador
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: ambassador-service
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+    - name: https
+      port: 443
+      targetPort: 8443
+  selector:
+    app.kubernetes.io/name: ambassador
+    app.kubernetes.io/instance: ambassador

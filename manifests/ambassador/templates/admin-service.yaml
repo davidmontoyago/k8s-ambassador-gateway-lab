@@ -1,0 +1,22 @@
+---
+# Source: ambassador/templates/admin-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ambassador-admin
+  labels:
+    app.kubernetes.io/name: ambassador
+    helm.sh/chart: ambassador-5.1.0
+    app.kubernetes.io/instance: ambassador
+    app.kubernetes.io/part-of: ambassador
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8877
+      targetPort: admin
+      protocol: TCP
+      name: admin
+  selector:
+    app.kubernetes.io/name: ambassador
+    app.kubernetes.io/instance: ambassador
