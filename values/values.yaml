@@ -1,2 +1,77 @@
 namespace:
   name: default
+
+service:
+  type: LoadBalancer
+  # this service routes external traffic - preserve client source IP
+  # https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  externalTrafficPolicy: Local
+
+  # Note that target http ports need to match your ambassador configurations service_port
+  # https://www.getambassador.io/reference/modules/#the-ambassador-module
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      # protocol: TCP
+      # nodePort: 30080
+    - name: https
+      port: 443
+      targetPort: 8443
+      # protocol: TCP
+      # nodePort: 30443
+    # TCPMapping_Port
+      # port: 2222
+      # targetPort: 2222
+      # protocol: TCP
+      # nodePort: 30222
+
+  annotations:
+  #############################################################################
+  ## Ambassador should be configured using CRD definition. If you want
+  ## to use annotations, the following is an example of annotating the
+  ## Ambassador service with global configuration manifest.
+  ##
+  ## See https://www.getambassador.io/reference/core/ambassador and
+  ## https://www.getambassador.io/reference/core/tls for more info
+  #############################################################################
+  #
+  #  getambassador.io/config: |
+  #    ---
+  #    apiVersion: ambassador/v1
+  #    kind: TLSContext
+  #    name: ambassador
+  #    secret: ambassador-certs
+  #    hosts: ["*"]
+  #    ---
+  #    apiVersion: ambassador/v1
+  #    kind: Module
+  #    name: ambassador
+  #    config:
+  #      admin_port: 8001
+  #      diag_port: 8877
+  #      diagnostics:
+  #        enabled: true
+  #      enable_grpc_http11_bridge: false
+  #      enable_grpc_web: false
+  #      enable_http10: false
+  #      enable_ipv4: true
+  #      enable_ipv6: false
+  #      liveness_probe:
+  #        enabled: true
+  #      lua_scripts:
+  #      readiness_probe:
+  #        enabled: true
+  #      server_name: envoy
+  #      service_port: 8080
+  #      use_proxy_proto: false
+  #      use_remote_address: true
+  #      xff_num_trusted_hops: 0
+  #      x_forwarded_proto_redirect: false
+  #      load_balancer:
+  #        policy: round_robin
+  #      circuit_breakers:
+  #        max_connections: 2048
+  #      retry_policy:
+  #        retry_on: "5xx"
+  #      cors:

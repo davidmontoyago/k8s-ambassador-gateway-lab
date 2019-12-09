@@ -9,10 +9,11 @@ metadata:
     app.kubernetes.io/part-of: ambassador
     helm.sh/chart: ambassador-5.1.0
     app.kubernetes.io/instance: ambassador
-    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/managed-by: Tiller
     app.kubernetes.io/component: ambassador-service
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: "Local"
   ports:
     - name: http
       port: 80
@@ -20,6 +21,7 @@ spec:
     - name: https
       port: 443
       targetPort: 8443
+    
   selector:
     app.kubernetes.io/name: ambassador
     app.kubernetes.io/instance: ambassador

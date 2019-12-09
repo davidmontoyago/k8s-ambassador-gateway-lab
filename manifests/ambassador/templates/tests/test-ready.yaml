@@ -1,0 +1,21 @@
+---
+# Source: ambassador/templates/tests/test-ready.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "ambassador-test-ready"
+  labels:
+    app.kubernetes.io/name: ambassador
+    helm.sh/chart: ambassador-5.1.0
+    app.kubernetes.io/instance: ambassador
+    app.kubernetes.io/managed-by: Tiller
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['ambassador:80/ambassador/v0/check_ready']
+  restartPolicy: Never

@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/part-of: ambassador
     helm.sh/chart: ambassador-5.1.0
     app.kubernetes.io/instance: ambassador
-    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/managed-by: Tiller
 spec:
   replicas: 3
   selector:
@@ -27,6 +27,7 @@ spec:
     spec:
       securityContext:
         runAsUser: 8888
+        
       serviceAccountName: ambassador
       volumes:
         - name: ambassador-pod-info
@@ -74,7 +75,9 @@ spec:
               readOnly: true
           resources:
             {}
+            
       imagePullSecrets:
         []
+        
       dnsPolicy: ClusterFirst
       hostNetwork: false

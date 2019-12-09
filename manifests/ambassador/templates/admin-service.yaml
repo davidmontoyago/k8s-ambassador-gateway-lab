@@ -9,7 +9,7 @@ metadata:
     helm.sh/chart: ambassador-5.1.0
     app.kubernetes.io/instance: ambassador
     app.kubernetes.io/part-of: ambassador
-    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/managed-by: Tiller
 spec:
   type: ClusterIP
   ports:
