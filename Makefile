@@ -21,6 +21,8 @@ deploy:
 	kubectl apply --recursive -f ./manifests/httpbin
 
 delete:
+	kubectl delete --recursive -f ./manifests/httpbin
+	kubectl delete --recursive -f ./manifests/ambassador/config
 	kubectl delete --recursive -f ./manifests/ambassador/templates
 
 diag:
