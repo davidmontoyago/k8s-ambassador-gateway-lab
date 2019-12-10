@@ -11,7 +11,27 @@ An edge gateway can broker connections across network boundaries while supportin
 - Route Management
 - Request/Response Caching
 
-# Pre-requisites
+### Experiments
+
+- TLS termination
+- gzip compression
+- Canary routing
+
+### TODO
+
+- gRPC experiment
+
+### Pre-requisites
 
 - Helm2
 - minikube
+
+### Getting Started
+
+```
+make deploy
+```
+
+```
+curl -i -k https://192.168.64.2:30783/httpbin/get
+```

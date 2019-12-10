@@ -18,6 +18,7 @@ deploy:
 		--dry-run -o=yaml | kubectl apply -f -
 	kubectl apply --recursive -f ./manifests/ambassador/templates
 	kubectl apply --recursive -f ./manifests/ambassador/config
+	kubectl apply --recursive -f ./manifests/httpbin
 
 delete:
 	kubectl delete --recursive -f ./manifests/ambassador/templates

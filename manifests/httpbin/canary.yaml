@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: httpbin
+  name: httpbinv2
   labels:
-    app: httpbin
+    app: httpbinv2
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: httpbin
+      app: httpbinv2
   template:
     metadata:
       labels:
-        app: httpbin
+        app: httpbinv2
     spec:
       containers:
       - name: httpbin
@@ -24,19 +24,21 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: httpbin
+  name: httpbinv2
 spec:
   ports:
   - port: 80
   selector:
-    app: httpbin
+    app: httpbinv2
 ---
 apiVersion: getambassador.io/v1
 kind: Mapping
 metadata:
-  name: httpbin
+  name: httpbin-canary
 spec:
   prefix: /httpbin/
-  service: httpbin:80
+  service: httpbinv2:80
   add_response_headers:
-    x-api-version: "v1"
+    # https://github.com/datawire/ambassador/issues/1665
+    x-api-version: "v2"
+  weight: 10
