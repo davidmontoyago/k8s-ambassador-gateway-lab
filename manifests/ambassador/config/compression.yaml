@@ -1,0 +1,13 @@
+---
+# gzip json & xml content
+apiVersion: getambassador.io/v1
+kind:  Module
+metadata:
+  name:  ambassador
+spec:
+  config:
+    gzip:
+      enabled: true
+      content_type: 
+        - application/xml
+        - application/json

@@ -1,4 +1,5 @@
 ---
+# terminate tls at gateway
 apiVersion: getambassador.io/v1
 kind: TLSContext
 metadata:
