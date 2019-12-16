@@ -6,5 +6,13 @@ metadata:
   name: tls
 spec:
   hosts: ["*"]
-  secret: ambassador-cert
+  secret: gateway-tls-keys
   redirect_cleartext_from: 8080
+---
+apiVersion: getambassador.io/v1
+kind: TLSContext
+metadata:
+  name: upstream-api
+spec:
+  alpn_protocols: h2
+  secret: upstream-api-tls-keys

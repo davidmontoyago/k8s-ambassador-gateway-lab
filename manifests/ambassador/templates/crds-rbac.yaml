@@ -8,7 +8,7 @@ metadata:
   name: ambassador-crds
   labels:
     app.kubernetes.io/name: ambassador
-    helm.sh/chart: ambassador-5.1.0
+    helm.sh/chart: ambassador-5.2.2
     app.kubernetes.io/instance: ambassador
     app.kubernetes.io/managed-by: Tiller
 rules:
@@ -26,6 +26,7 @@ rules:
     - kubernetesendpointresolvers.getambassador.io
     - kubernetesserviceresolvers.getambassador.io
     - consulresolvers.getambassador.io
+    - logservices.getambassador.io
     verbs: ["get", "list", "watch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -34,7 +35,7 @@ metadata:
   name: ambassador-crds
   labels:
     app.kubernetes.io/name: ambassador
-    helm.sh/chart: ambassador-5.1.0
+    helm.sh/chart: ambassador-5.2.2
     app.kubernetes.io/instance: ambassador
     app.kubernetes.io/managed-by: Tiller
 roleRef:

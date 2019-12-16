@@ -13,13 +13,14 @@ An edge gateway can broker connections across network boundaries while supportin
 
 ### Experiments
 
-- TLS termination
+- TLS termination at gateway
 - gzip compression
 - Canary routing
+- gRPC over TLS
 
 ### TODO
 
-- gRPC experiment
+- gRPC Ring hash LB
 
 ### Pre-requisites
 
@@ -29,9 +30,17 @@ An edge gateway can broker connections across network boundaries while supportin
 ### Getting Started
 
 ```
-make deploy
-```
+# helm template ambassador
+make templates
 
-```
-curl -i -k https://192.168.64.2:30783/httpbin/get
+# deploy ambassador and sample apps
+make deploy
+
+# curl httpbin app
+curl -i -k https://192.168.64.2:30135/httpbin/get
+
+# run grpc client - requires ambassador gateway cert
+# fails to mount ./certs with minikube's docker daemon - use host's docker instead
+eval "$(docker-machine env -u)"
+docker run -it --rm -v `pwd`/certs/:/certs/ -e mode=client -e server_host=192.168.64.2 -e server_port=30135 -e CERT_PEM=/certs/cert.pem tls-grpc-app:latest
 ```

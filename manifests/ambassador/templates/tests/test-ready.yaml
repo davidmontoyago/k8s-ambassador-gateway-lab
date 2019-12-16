@@ -7,7 +7,7 @@ metadata:
   name: "ambassador-test-ready"
   labels:
     app.kubernetes.io/name: ambassador
-    helm.sh/chart: ambassador-5.1.0
+    helm.sh/chart: ambassador-5.2.2
     app.kubernetes.io/instance: ambassador
     app.kubernetes.io/managed-by: Tiller
   annotations:

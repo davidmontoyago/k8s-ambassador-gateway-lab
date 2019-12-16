@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-tls-hello-world
+  labels:
+    app: grpc-tls-hello-world
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: grpc-tls-hello-world
+  template:
+    metadata:
+      labels:
+        app: grpc-tls-hello-world
+    spec:
+      volumes:
+        - name: tls-config
+          secret:
+            secretName: upstream-api-tls-keys
+      containers:
+      - name: app
+        image: tls-grpc-app:latest
+        imagePullPolicy: Never
+        env:
+          - name: mode
+            value: server
+          - name: CERT_PEM
+            value: /tls-grpc-app/certs/tls.crt
+          - name: KEY_PEM
+            value: /tls-grpc-app/certs/tls.key
+        ports:
+          - name: grpc-api
+            containerPort: 50051
+        volumeMounts:
+          - name: tls-config
+            mountPath: /tls-grpc-app/certs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-tls-hello-world
+spec:
+  ports:
+  - port: 443
+    targetPort: grpc-api
+  selector:
+    app: grpc-tls-hello-world
+---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: grpc-tls-hello-world
+spec:
+  grpc: true
+  # originate tls with "upstream-api" context
+  tls: upstream-api
+  prefix: /api.SecureService/
+  rewrite: /api.SecureService/
+  service: https://grpc-tls-hello-world
